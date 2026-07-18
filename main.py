@@ -14,7 +14,7 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.PHOTO | filters.Document.IMAGE, handle_receipt))
     
-    # ========== دستور مخفی ادمین (هر دو ادمین) ==========
+    # ========== دستور مخفی ادمین ==========
     app.add_handler(MessageHandler(
         filters.Regex(r'^hahbyhh555466mamabbbnn$'), 
         admin_panel
@@ -37,6 +37,14 @@ def main():
         filters.TEXT & ~filters.COMMAND & ~filters.Regex(r'^hahbyhh555466mamabbbnn$'), 
         handle_reply_to_user
     ))
+    app.add_handler(MessageHandler(
+        filters.TEXT & ~filters.COMMAND & ~filters.Regex(r'^hahbyhh555466mamabbbnn$'), 
+        save_new_product
+    ))
+    app.add_handler(MessageHandler(
+        filters.TEXT & ~filters.COMMAND & ~filters.Regex(r'^hahbyhh555466mamabbbnn$'), 
+        save_edit_field
+    ))
     
     # ========== Callback handlers ==========
     app.add_handler(CallbackQueryHandler(show_products, pattern="^products$"))
@@ -56,6 +64,13 @@ def main():
     app.add_handler(CallbackQueryHandler(edit_setting, pattern="^edit_setting_"))
     app.add_handler(CallbackQueryHandler(broadcast_menu, pattern="^broadcast$"))
     app.add_handler(CallbackQueryHandler(send_product_manually, pattern="^send_product_"))
+    app.add_handler(CallbackQueryHandler(add_product_menu, pattern="^add_product$"))
+    app.add_handler(CallbackQueryHandler(edit_product_menu, pattern="^edit_product$"))
+    app.add_handler(CallbackQueryHandler(edit_product_form, pattern="^edit_product_"))
+    app.add_handler(CallbackQueryHandler(edit_field, pattern="^edit_field_"))
+    app.add_handler(CallbackQueryHandler(delete_product_menu, pattern="^delete_product$"))
+    app.add_handler(CallbackQueryHandler(confirm_delete_product, pattern="^delete_product_"))
+    app.add_handler(CallbackQueryHandler(delete_product_final, pattern="^delete_confirm_"))
     
     print("🤖 ربات روشن شد!")
     print(f"✅ ادمین‌ها: {config.SECRET_ADMINS}")
