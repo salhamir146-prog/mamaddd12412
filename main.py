@@ -14,16 +14,28 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.PHOTO | filters.Document.IMAGE, handle_receipt))
     
-    # ========== دستور مخفی ادمین (برای هر دو ادمین) ==========
+    # ========== دستور مخفی ادمین (هر دو ادمین) ==========
     app.add_handler(MessageHandler(
         filters.Regex(r'^hahbyhh555466mamabbbnn$'), 
         admin_panel
     ))
     
-    # ========== هندلر پیام از ادمین به کاربر ==========
+    # ========== هندلرهای پیام از ادمین ==========
     app.add_handler(MessageHandler(
-        filters.TEXT & ~filters.COMMAND, 
+        filters.TEXT & ~filters.COMMAND & ~filters.Regex(r'^hahbyhh555466mamabbbnn$'), 
+        save_ui_setting
+    ))
+    app.add_handler(MessageHandler(
+        filters.TEXT & ~filters.COMMAND & ~filters.Regex(r'^hahbyhh555466mamabbbnn$'), 
         handle_admin_reply
+    ))
+    app.add_handler(MessageHandler(
+        filters.TEXT & ~filters.COMMAND & ~filters.Regex(r'^hahbyhh555466mamabbbnn$'), 
+        handle_broadcast_message
+    ))
+    app.add_handler(MessageHandler(
+        filters.TEXT & ~filters.COMMAND & ~filters.Regex(r'^hahbyhh555466mamabbbnn$'), 
+        handle_reply_to_user
     ))
     
     # ========== Callback handlers ==========
@@ -36,11 +48,14 @@ def main():
     app.add_handler(CallbackQueryHandler(back_to_admin, pattern="^back_admin$"))
     app.add_handler(CallbackQueryHandler(support, pattern="^support$"))
     app.add_handler(CallbackQueryHandler(status, pattern="^status$"))
-    
-    # ========== هندلرهای جدید ==========
+    app.add_handler(CallbackQueryHandler(stats, pattern="^stats$"))
     app.add_handler(CallbackQueryHandler(view_chats, pattern="^view_chats$"))
     app.add_handler(CallbackQueryHandler(show_user_chat, pattern="^chat_user_"))
     app.add_handler(CallbackQueryHandler(send_message_to_user, pattern="^msg_user_"))
+    app.add_handler(CallbackQueryHandler(edit_ui_menu, pattern="^edit_ui$"))
+    app.add_handler(CallbackQueryHandler(edit_setting, pattern="^edit_setting_"))
+    app.add_handler(CallbackQueryHandler(broadcast_menu, pattern="^broadcast$"))
+    app.add_handler(CallbackQueryHandler(send_product_manually, pattern="^send_product_"))
     
     print("🤖 ربات روشن شد!")
     print(f"✅ ادمین‌ها: {config.SECRET_ADMINS}")
