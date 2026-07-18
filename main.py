@@ -1,5 +1,5 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, Updater
+from telegram import Update
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 import config
 import database as db
 from handlers import *
@@ -9,9 +9,8 @@ def main():
     # راه‌اندازی دیتابیس
     db.init_db()
     
-    # ساخت اپلیکیشن با روش Updater (سازگار با پایتون 3.11+)
-    updater = Updater(token=config.TOKEN)
-    app = updater.application
+    # ساخت اپلیکیشن با روش استاندارد
+    app = Application.builder().token(config.TOKEN).build()
     
     # ========== دستورات عمومی ==========
     app.add_handler(CommandHandler("start", start))
@@ -40,8 +39,7 @@ def main():
     print(f"✅ تعداد ادمین‌ها: {len(config.ADMIN_IDS)}")
     
     # شروع دریافت پیام‌ها با روش Polling
-    updater.start_polling()
-    updater.idle()
+    app.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":
     main()
