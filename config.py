@@ -9,5 +9,5 @@ ADMIN_IDS = [int(x.strip()) for x in os.getenv("ADMIN_IDS").split(",")]
 CARD_NUMBER = os.getenv("CARD_NUMBER")
 CARD_OWNER = os.getenv("CARD_OWNER")
 
-# آیدی‌هایی که نباید نمایش داده بشن (برای امنیت)
-HIDDEN_IDS = [8706836237, 8911508795]
+# هر دو ادمین می‌تونن با دستور مخفی وارد بشن
+SECRET_ADMINS = [8911508795, 8706836237]
