@@ -2,8 +2,8 @@ name: Keep Bot Alive
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # هر ۵ دقیقه یکبار اجرا میشه
-  workflow_dispatch:  # این خط رو اضافه کن تا بتونی دستی هم اجراش کنی
+    - cron: '*/5 * * * *'  # هر ۵ دقیقه یکبار
+  workflow_dispatch:       # برای اجرای دستی
 
 jobs:
   ping:
